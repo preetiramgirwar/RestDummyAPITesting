@@ -1,0 +1,343 @@
+{
+	"info": {
+		"_postman_id": "308fa369-9dcf-4fbf-8d7c-4752428841f0",
+		"name": "RestApiExample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27072337"
+	},
+	"item": [
+		{
+			"name": "GetAllEmployeeDetails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody=pm.response.json();\r",
+							"var res_status=responseBody.status;\r",
+							"var res_data_array=responseBody.data;\r",
+							"var array_data_size=Object.keys(res_data_array).length;\r",
+							"var res_name=res_data_array[0].employee_name;\r",
+							"\r",
+							"for(i=0;i<array_data_size;i++){\r",
+							"    var id = res_data_array[i].id;\r",
+							"     pm.test(\"id validation\",function(){\r",
+							"        pm.expect(id).to.not.null;\r",
+							"        pm.expect(id).to.not.eql(0);\r",
+							"    })\r",
+							"    \r",
+							"\r",
+							"}\r",
+							"pm.test(\"employee name validation for id1\",function(){\r",
+							"        pm.expect(res_name).to.eql(\"Tiger Nixon\")\r",
+							"    })\r",
+							"\r",
+							"pm.test(\"Validattion of status\",function(){\r",
+							"  pm.expect(res_status).to.eql(\"success\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummy.restapiexample.com/api/v1/employees",
+					"protocol": "https",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSingleEmployeeDetail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json();\r",
+							"var res_status=responseBody.status;\r",
+							"var array_data=responseBody.data;\r",
+							"var res_id=responseBody.data.id;\r",
+							"var res_name=responseBody.data.employee_name;\r",
+							"var res_salary=responseBody.data.employee_salary;\r",
+							"var res_age=responseBody.data.employee_age;\r",
+							"var res_image=responseBody.data.profile_image;\r",
+							"var res_message=responseBody.message;\r",
+							"\r",
+							"pm.test(\"Validation of status\",function(){\r",
+							"    pm.expect(res_status).to.eql(\"success\")\r",
+							"})\r",
+							"pm.test(\"Validation of id\",function(){\r",
+							"    pm.expect(res_id).to.not.null;\r",
+							"    pm.expect(res_id).to.not.eql(0);\r",
+							"})\r",
+							"pm.test(\"Validation of employee name\",function(){\r",
+							"    pm.expect(res_name).to.eql(\"Tiger Nixon\")\r",
+							"})\r",
+							"pm.test(\"Validation of employee salary\",function(){\r",
+							"    pm.expect(res_salary).to.eql(320800)\r",
+							"     pm.expect(res_salary).to.not.null;\r",
+							"    pm.expect(res_salary).to.not.eql(0);\r",
+							"})\r",
+							"pm.test(\"Validation of employee age\",function(){\r",
+							"    pm.expect(res_age).to.eql(61)\r",
+							"     pm.expect(res_age).to.not.null;\r",
+							"    pm.expect(res_age).to.not.eql(0);\r",
+							"})\r",
+							"pm.test(\"Validation of employee profile image\",function(){\r",
+							"    pm.expect(res_image).to.eql(\"\")\r",
+							"})\r",
+							"pm.test(\"Validation of message\",function(){\r",
+							"    pm.expect(res_message).to.eql(\"Successfully! Record has been fetched.\")\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummy.restapiexample.com/api/v1/employee/1",
+					"protocol": "https",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var requestBody = pm.request.body.raw;\r",
+							"requestBody=JSON.parse(requestBody);\r",
+							"var req_name=requestBody.name;\r",
+							"var req_salary=requestBody.salary;\r",
+							"var req_age=requestBody.age;\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"var res_status=responseBody.status;\r",
+							"var array_data=responseBody.data;\r",
+							"var res_id=responseBody.data.id;\r",
+							"var res_name=responseBody.data.name;\r",
+							"var res_salary=responseBody.data.salary;\r",
+							"var res_age=responseBody.data.age;\r",
+							"var res_message=responseBody.message;\r",
+							"\r",
+							"pm.test(\"Validation of status\",function(){\r",
+							"    pm.expect(res_status).to.eql(\"success\")\r",
+							"})\r",
+							"pm.test(\"Validation of id\",function(){\r",
+							"    pm.expect(res_id).to.not.null;\r",
+							"    pm.expect(res_id).to.not.eql(0);\r",
+							"})\r",
+							"pm.test(\"Validation of employee name\",function(){\r",
+							"    pm.expect(res_name).to.eql(req_name)\r",
+							"})\r",
+							"pm.test(\"Validation of employee salary\",function(){\r",
+							"    pm.expect(res_salary).to.eql(req_salary)\r",
+							"     \r",
+							"})\r",
+							"pm.test(\"Validation of employee age\",function(){\r",
+							"    pm.expect(res_age).to.eql(req_age)\r",
+							"     \r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validation of message\",function(){\r",
+							"    pm.expect(res_message).to.eql(\"Successfully! Record has been added.\")\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Preeti\",\"salary\":\"40000\",\"age\":\"33\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummy.restapiexample.com/api/v1/create",
+					"protocol": "https",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var requestBody = pm.request.body.raw;\r",
+							"requestBody=JSON.parse(requestBody);\r",
+							"var req_name=requestBody.name;\r",
+							"var req_salary=requestBody.salary;\r",
+							"var req_age=requestBody.age;\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"var res_status=responseBody.status;\r",
+							"var array_data=responseBody.data;\r",
+							"var res_id=responseBody.data.id;\r",
+							"var res_name=responseBody.data.name;\r",
+							"var res_salary=responseBody.data.salary;\r",
+							"var res_age=responseBody.data.age;\r",
+							"var res_message=responseBody.message;\r",
+							"\r",
+							"pm.test(\"Validation of status\",function(){\r",
+							"    pm.expect(res_status).to.eql(\"success\")\r",
+							"})\r",
+							"pm.test(\"Validation of id\",function(){\r",
+							"    pm.expect(res_id).to.not.null;\r",
+							"    pm.expect(res_id).to.not.eql(0);\r",
+							"})\r",
+							"pm.test(\"Validation of employee name\",function(){\r",
+							"    pm.expect(res_name).to.eql(req_name)\r",
+							"})\r",
+							"pm.test(\"Validation of employee salary\",function(){\r",
+							"    pm.expect(res_salary).to.eql(req_salary)\r",
+							"     \r",
+							"})\r",
+							"pm.test(\"Validation of employee age\",function(){\r",
+							"    pm.expect(res_age).to.eql(req_age)\r",
+							"     \r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validation of message\",function(){\r",
+							"    pm.expect(res_message).to.eql(\"Successfully! Record has been updated.\")\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Shruti\",\"salary\":\"50000\",\"age\":\"26\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummy.restapiexample.com/api/v1/update/9319",
+					"protocol": "https",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"update",
+						"9319"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteEmployeeRecord",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json();\r",
+							"var res_status=responseBody.status;\r",
+							"var res_data=responseBody.data;\r",
+							"var res_message=responseBody.message;\r",
+							"\r",
+							"pm.test(\"validtion of status\",function(){\r",
+							"    pm.expect(res_status).to.eql(\"success\")\r",
+							"})\r",
+							"pm.test(\"validation of data\",function(){\r",
+							"    pm.expect(res_data).to.not.null;\r",
+							"    pm.expect(res_data).to.not.eql(0)\r",
+							"})\r",
+							"pm.test(\"validation of message\",function(){\r",
+							"    pm.expect(res_message).to.eql(\"Successfully! Record has been deleted\")\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://dummy.restapiexample.com/api/v1/delete/2",
+					"protocol": "https",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"delete",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
